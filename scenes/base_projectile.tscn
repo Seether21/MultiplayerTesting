@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://0ddb7ihkgi2y"]
+
+[ext_resource type="Script" uid="uid://cbtrmud0rljxw" path="res://scripts/Projectile.gd" id="1_2x1vt"]
+[ext_resource type="Texture2D" uid="uid://b6v0raiv70610" path="res://Art/Gunner/Effect/1.png" id="1_kg56o"]
+[ext_resource type="Script" uid="uid://demfg6glbchi0" path="res://scripts/Components/HurtBoxComponent.gd" id="3_625mw"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2x1vt"]
+radius = 2.0
+
+[node name="Projectile" type="Node2D"]
+script = ExtResource("1_2x1vt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = 1.5708
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_kg56o")
+
+[node name="HurtBoxComponent" type="Area2D" parent="."]
+collision_layer = 0
+script = ExtResource("3_625mw")
+friendly_fire = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
+position = Vector2(4, 0)
+shape = SubResource("CircleShape2D_2x1vt")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[connection signal="team_set" from="." to="HurtBoxComponent" method="set_team"]
+[connection signal="area_entered" from="HurtBoxComponent" to="." method="_on_hurt_box_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_despawn"]
