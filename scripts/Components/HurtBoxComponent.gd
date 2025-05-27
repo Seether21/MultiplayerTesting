@@ -14,4 +14,4 @@ func set_team(new_team : int, friendly : bool = false):
 			new_mask += pow(2,i)
 		elif i != new_team:
 			new_mask += pow(2,i)
-	collision_layer = new_mask
+	collision_mask = new_mask

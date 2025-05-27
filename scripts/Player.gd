@@ -8,7 +8,7 @@ var stunned := false
 @onready var death_counter: Timer = $Components/DeathCounter
 
 @export var current_weapon : WeaponData
-@export_range(1,4,1) var current_team : int
+@export_range(1,4,1) var current_team : int = 1
 @onready var camera: Camera2D = $Camera2D
 
 signal weapon_changed(weapon_data : WeaponData)
@@ -30,6 +30,7 @@ func _ready() -> void:
 
 func set_team(new_team : int):
 	current_team = new_team
+	collision_layer = pow(2,current_team) + pow(1,1-1)
 	team_changed.emit(new_team)
 
 

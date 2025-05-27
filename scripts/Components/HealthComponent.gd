@@ -9,6 +9,7 @@ signal died
 signal health_changed(new_health : int)
 signal damage_taken(amount : int)
 signal health_generated(amount : int)
+signal max_health_changed(amount : int)
 
 func _ready() -> void:
 	current_health = max_health
@@ -36,4 +37,5 @@ func change_max_health(amount : int):
 	temp_max_health += amount
 	if temp_max_health < 1:
 		temp_max_health = 1
+	max_health_changed.emit(temp_max_health)
 	health_changed.emit(current_health)

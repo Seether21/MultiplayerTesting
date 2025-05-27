@@ -7,8 +7,9 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_2x1vt"]
 radius = 2.0
 
-[node name="Projectile" type="Node2D"]
+[node name="Projectile" type="Node2D" node_paths=PackedStringArray("hurtbox")]
 script = ExtResource("1_2x1vt")
+hurtbox = NodePath("HurtBoxComponent")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 1.5708
@@ -17,8 +18,8 @@ texture = ExtResource("1_kg56o")
 
 [node name="HurtBoxComponent" type="Area2D" parent="."]
 collision_layer = 0
+collision_mask = 0
 script = ExtResource("3_625mw")
-friendly_fire = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBoxComponent"]
 position = Vector2(4, 0)

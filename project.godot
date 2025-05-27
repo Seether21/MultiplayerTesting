@@ -26,6 +26,7 @@ enabled=PackedStringArray("res://addons/godot_state_charts/plugin.cfg")
 [global_group]
 
 ProjectileSpawns=""
+Player=""
 
 [input]
 
@@ -69,6 +70,7 @@ fire={
 2d_physics/layer_5="Team4"
 2d_physics/layer_6="Enemies"
 2d_physics/layer_7="Objects"
+2d_physics/layer_8="Body Colliders"
 
 [rendering]
 

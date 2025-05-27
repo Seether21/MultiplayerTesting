@@ -1,4 +1,5 @@
 extends Node
+class_name MovementComponent
 
 @export var walk_speed : int = 10.0
 @export var run_speed : int = 25.0
