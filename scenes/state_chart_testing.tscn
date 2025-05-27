@@ -1,14 +1,112 @@
-[gd_scene load_steps=5 format=4 uid="uid://b8g3h0wthr4k2"]
+[gd_scene load_steps=33 format=4 uid="uid://b8g3h0wthr4k2"]
 
 [ext_resource type="Script" uid="uid://cqmhb50ad5b13" path="res://scripts/MultiPlayer.gd" id="2_d3ab8"]
 [ext_resource type="PackedScene" uid="uid://dk0ky5rvaillf" path="res://scenes/Player.tscn" id="2_s81qm"]
+[ext_resource type="Script" uid="uid://dgh5xj3wh6mex" path="res://scripts/enemy/MainZombie.gd" id="4_8fgeg"]
+[ext_resource type="Texture2D" uid="uid://u2kwb02gefui" path="res://Art/Zombie/BasicZombie.png" id="4_nrua7"]
 [ext_resource type="TileSet" uid="uid://gnnk51nnco42" path="res://resources/ground_tileset.tres" id="4_s81qm"]
+[ext_resource type="Texture2D" uid="uid://fmd1fkxhigoh" path="res://Art/Gunner/Walk/GunnerWalk_01.png" id="5_d8rwb"]
+[ext_resource type="Script" uid="uid://cetrjmyx0wdga" path="res://scripts/Components/HitBoxComponent.gd" id="5_gnc8n"]
+[ext_resource type="Texture2D" uid="uid://cw3vs6npx4gfa" path="res://Art/Gunner/Walk/GunnerWalk_02.png" id="6_sx0qj"]
+[ext_resource type="Texture2D" uid="uid://8w7tnc1gvqr7" path="res://Art/Gunner/Walk/GunnerWalk_03.png" id="7_i4eux"]
+[ext_resource type="Texture2D" uid="uid://dtuebok2xtid" path="res://Art/Gunner/Walk/GunnerWalk_04.png" id="8_yr4c6"]
+[ext_resource type="Texture2D" uid="uid://bt48gmkkh1nek" path="res://Art/Gunner/Walk/GunnerWalk_05.png" id="9_ejpd0"]
+[ext_resource type="Texture2D" uid="uid://34orndkqoh4f" path="res://Art/Gunner/Walk/GunnerWalk_06.png" id="10_fdflf"]
+[ext_resource type="Texture2D" uid="uid://dgdeeql32txpc" path="res://Art/Gunner/Walk/GunnerWalk_07.png" id="11_8fgeg"]
+[ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="12_d8rwb"]
+[ext_resource type="Script" uid="uid://c1vp0ojjvaby1" path="res://addons/godot_state_charts/parallel_state.gd" id="13_yr4c6"]
+[ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="14_ejpd0"]
+[ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="15_fdflf"]
+[ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="16_ejpd0"]
+[ext_resource type="Script" uid="uid://byrc0nnhevqrl" path="res://scripts/Components/Enemy/WanderComponent.gd" id="17_fdflf"]
+[ext_resource type="Script" uid="uid://bqcmgr35kqpi0" path="res://scripts/Components/MovementComponent.gd" id="19_yjw4m"]
+[ext_resource type="Script" uid="uid://bqqar4aaqmwry" path="res://scripts/Components/Enemy/ChaseComponent.gd" id="20_ma7ni"]
+[ext_resource type="Script" uid="uid://crust2jfa11jb" path="res://scripts/Components/HealthComponent.gd" id="22_eb730"]
+[ext_resource type="Script" uid="uid://bi6qg4fcb56f2" path="res://scripts/Components/HealthNotifierComponent.gd" id="23_eb730"]
+[ext_resource type="Script" uid="uid://br38nqork3tvn" path="res://scripts/gui/FloatingHealthBar.gd" id="24_7b0ya"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_d3ab8"]
 font_size = 24
 font_color = Color(0.112366, 0.764399, 0.866672, 1)
 outline_size = 5
 outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yjw4m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_nrua7")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_d8rwb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_sx0qj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_i4eux")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_yr4c6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ejpd0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_fdflf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_8fgeg")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 10.0
+}]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m2ncr"]
+bg_color = Color(0.517157, 0.157977, 0.133275, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_13tku"]
+bg_color = Color(0.210154, 0.71297, 0.273178, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 1
+corner_radius_top_right = 1
+corner_radius_bottom_right = 1
+corner_radius_bottom_left = 1
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7b0ya"]
+radius = 12.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yjw4m"]
+radius = 170.766
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gnc8n"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_7b0ya"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [node name="StateChartTesting" type="Node2D"]
 
@@ -82,5 +180,163 @@ label_settings = SubResource("LabelSettings_d3ab8")
 _spawnable_scenes = PackedStringArray("uid://dk0ky5rvaillf")
 spawn_path = NodePath("../Players")
 
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." node_paths=PackedStringArray("nav_agent")]
+position = Vector2(733, 0)
+collision_layer = 128
+collision_mask = 129
+script = ExtResource("4_8fgeg")
+nav_agent = NodePath("NavigationAgent2D")
+
+[node name="Visuals" type="Node2D" parent="CharacterBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D/Visuals"]
+sprite_frames = SubResource("SpriteFrames_yjw4m")
+animation = &"idle"
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D/Visuals/AnimatedSprite2D"]
+texture = ExtResource("4_nrua7")
+
+[node name="StateChart" type="Node" parent="CharacterBody2D"]
+script = ExtResource("12_d8rwb")
+metadata/_custom_type_script = "uid://couw105c3bde4"
+
+[node name="Alive" type="Node" parent="CharacterBody2D/StateChart"]
+script = ExtResource("14_ejpd0")
+initial_state = NodePath("ParallelState")
+
+[node name="ParallelState" type="Node" parent="CharacterBody2D/StateChart/Alive"]
+script = ExtResource("13_yr4c6")
+
+[node name="Animation" type="Node" parent="CharacterBody2D/StateChart/Alive/ParallelState"]
+script = ExtResource("14_ejpd0")
+initial_state = NodePath("Default")
+
+[node name="Default" type="Node" parent="CharacterBody2D/StateChart/Alive/ParallelState/Animation"]
+script = ExtResource("15_fdflf")
+
+[node name="Idle" type="Node" parent="CharacterBody2D/StateChart/Alive/ParallelState/Animation"]
+script = ExtResource("15_fdflf")
+
+[node name="Movement" type="Node" parent="CharacterBody2D/StateChart/Alive/ParallelState"]
+script = ExtResource("14_ejpd0")
+initial_state = NodePath("Idle")
+
+[node name="Wander" type="Node" parent="CharacterBody2D/StateChart/Alive/ParallelState/Movement"]
+script = ExtResource("15_fdflf")
+
+[node name="To Idle" type="Node" parent="CharacterBody2D/StateChart/Alive/ParallelState/Movement/Wander"]
+script = ExtResource("16_ejpd0")
+to = NodePath("../../Idle")
+event = &"wander_complete"
+delay_in_seconds = "0.0"
+
+[node name="To Chase" type="Node" parent="CharacterBody2D/StateChart/Alive/ParallelState/Movement/Wander"]
+script = ExtResource("16_ejpd0")
+to = NodePath("../../Chase")
+event = &"chase"
+delay_in_seconds = "0.0"
+
+[node name="Idle" type="Node" parent="CharacterBody2D/StateChart/Alive/ParallelState/Movement"]
+script = ExtResource("15_fdflf")
+
+[node name="To Wander" type="Node" parent="CharacterBody2D/StateChart/Alive/ParallelState/Movement/Idle"]
+script = ExtResource("16_ejpd0")
+to = NodePath("../../Wander")
+delay_in_seconds = "2.0"
+
+[node name="To Chase" type="Node" parent="CharacterBody2D/StateChart/Alive/ParallelState/Movement/Idle"]
+script = ExtResource("16_ejpd0")
+to = NodePath("../../Chase")
+event = &"chase"
+delay_in_seconds = "0.0"
+
+[node name="Chase" type="Node" parent="CharacterBody2D/StateChart/Alive/ParallelState/Movement"]
+script = ExtResource("15_fdflf")
+
+[node name="To Idle" type="Node" parent="CharacterBody2D/StateChart/Alive/ParallelState/Movement/Chase"]
+script = ExtResource("16_ejpd0")
+to = NodePath("../../Idle")
+event = &"chase_complete"
+delay_in_seconds = "0.0"
+
+[node name="Components" type="Node" parent="CharacterBody2D"]
+
+[node name="WanderComponent" type="Node" parent="CharacterBody2D/Components" node_paths=PackedStringArray("enemy_controller")]
+script = ExtResource("17_fdflf")
+enemy_controller = NodePath("../..")
+
+[node name="MovementComponent" type="Node" parent="CharacterBody2D/Components" node_paths=PackedStringArray("controller")]
+script = ExtResource("19_yjw4m")
+run_speed = 75
+controller = NodePath("../..")
+metadata/_custom_type_script = "uid://bqcmgr35kqpi0"
+
+[node name="ChaseComponent" type="Node" parent="CharacterBody2D/Components" node_paths=PackedStringArray("controller")]
+script = ExtResource("20_ma7ni")
+min_distance = 10
+max_distance = 400
+controller = NodePath("../..")
+
+[node name="HealthComponent" type="Node" parent="CharacterBody2D/Components"]
+script = ExtResource("22_eb730")
+metadata/_custom_type_script = "uid://crust2jfa11jb"
+
+[node name="HealthNotifierComponent" type="Node" parent="CharacterBody2D/Components" node_paths=PackedStringArray("spawn_point", "health_component")]
+script = ExtResource("23_eb730")
+spawn_point = NodePath("../..")
+health_component = NodePath("../HealthComponent")
+metadata/_custom_type_script = "uid://bi6qg4fcb56f2"
+
+[node name="HealthBar" type="ProgressBar" parent="CharacterBody2D" node_paths=PackedStringArray("health_component")]
+offset_left = -11.0
+offset_top = -14.0
+offset_right = 15.0
+offset_bottom = -10.0
+theme_override_styles/background = SubResource("StyleBoxFlat_m2ncr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_13tku")
+show_percentage = false
+script = ExtResource("24_7b0ya")
+health_component = NodePath("../Components/HealthComponent")
+
+[node name="HitBoxComponent" type="Area2D" parent="CharacterBody2D"]
+collision_layer = 32
+collision_mask = 0
+script = ExtResource("5_gnc8n")
+metadata/_custom_type_script = "uid://cetrjmyx0wdga"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/HitBoxComponent"]
+shape = SubResource("CircleShape2D_7b0ya")
+
+[node name="PlayerDetection" type="Area2D" parent="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 30
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/PlayerDetection"]
+shape = SubResource("CircleShape2D_yjw4m")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="CharacterBody2D"]
+debug_enabled = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("CircleShape2D_gnc8n")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="CharacterBody2D"]
+replication_config = SubResource("SceneReplicationConfig_7b0ya")
+
 [connection signal="pressed" from="Multiplayer/VBoxContainer/Host" to="Multiplayer" method="_on_host_pressed"]
 [connection signal="pressed" from="Multiplayer/VBoxContainer/HBoxContainer/Join" to="Multiplayer" method="_on_join_pressed"]
+[connection signal="target_found" from="CharacterBody2D" to="CharacterBody2D/Components/ChaseComponent" method="start_chase"]
+[connection signal="state_entered" from="CharacterBody2D/StateChart/Alive/ParallelState/Movement/Wander" to="CharacterBody2D/Components/WanderComponent" method="pick_wander_point"]
+[connection signal="state_exited" from="CharacterBody2D/StateChart/Alive/ParallelState/Movement/Wander" to="CharacterBody2D/Components/WanderComponent" method="state_exited"]
+[connection signal="state_processing" from="CharacterBody2D/StateChart/Alive/ParallelState/Movement/Wander" to="CharacterBody2D/Components/WanderComponent" method="update_navigation"]
+[connection signal="state_exited" from="CharacterBody2D/StateChart/Alive/ParallelState/Movement/Chase" to="CharacterBody2D/Components/ChaseComponent" method="exit_chase"]
+[connection signal="state_physics_processing" from="CharacterBody2D/StateChart/Alive/ParallelState/Movement/Chase" to="CharacterBody2D/Components/ChaseComponent" method="chase_target"]
+[connection signal="try_move" from="CharacterBody2D/Components/WanderComponent" to="CharacterBody2D/Components/MovementComponent" method="try_move"]
+[connection signal="wander_completed" from="CharacterBody2D/Components/WanderComponent" to="CharacterBody2D" method="_on_wander_component_wander_completed"]
+[connection signal="chase_complete" from="CharacterBody2D/Components/ChaseComponent" to="CharacterBody2D" method="_on_chase_component_chase_complete"]
+[connection signal="no_target" from="CharacterBody2D/Components/ChaseComponent" to="CharacterBody2D" method="_on_chase_component_no_target"]
+[connection signal="try_move" from="CharacterBody2D/Components/ChaseComponent" to="CharacterBody2D/Components/MovementComponent" method="try_move"]
+[connection signal="died" from="CharacterBody2D/Components/HealthComponent" to="CharacterBody2D" method="_on_health_component_died"]
+[connection signal="damage_taken" from="CharacterBody2D/HitBoxComponent" to="CharacterBody2D/Components/HealthComponent" method="subtract_health"]
+[connection signal="body_entered" from="CharacterBody2D/PlayerDetection" to="CharacterBody2D" method="_on_player_detection_body_entered"]
+[connection signal="target_reached" from="CharacterBody2D/NavigationAgent2D" to="CharacterBody2D/Components/WanderComponent" method="wander_complete"]

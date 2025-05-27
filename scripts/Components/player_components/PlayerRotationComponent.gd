@@ -1,12 +1,15 @@
 extends Node
 
-@export var player_controller : Node2D
+@export var visuals_node : Node2D
 
 
 func rotate_player(_delta : float):
 	if !is_multiplayer_authority():
 		return
-	if !player_controller:
+	if !get_window().has_focus():
 		return
-	var mouse_pos = player_controller.get_global_mouse_position()
-	player_controller.look_at(mouse_pos)
+	if !visuals_node:
+		return
+	var mouse_pos = visuals_node.get_global_mouse_position()
+	var direction := visuals_node.global_position.direction_to(mouse_pos)
+	visuals_node.rotation = direction.angle() - deg_to_rad(90)

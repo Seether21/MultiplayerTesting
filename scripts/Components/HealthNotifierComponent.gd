@@ -1,5 +1,5 @@
 extends Node
-
+class_name HealthNotifierComponent
 @export var spawn_point : Node2D
 @export var health_component: HealthComponent
 

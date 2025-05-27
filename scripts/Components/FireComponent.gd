@@ -17,6 +17,7 @@ var current_team : int
 func _ready() -> void:
 	if !is_multiplayer_authority():
 		return
+	friendly_fire = GameManager.friendly_fire
 	GameManager.friendly_fire_changed.connect(_set_friendly_fire)
 
 

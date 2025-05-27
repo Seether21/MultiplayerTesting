@@ -5,6 +5,7 @@ extends CanvasLayer
 @export var reload_progress_bar : TextureProgressBar
 @export var health_bar : ProgressBar
 @export var health_component : HealthComponent
+@export var health_label : Label
 
 var reload : bool = true
 
@@ -22,8 +23,7 @@ func _ready() -> void:
 	if reload_progress_bar:
 		reload_progress_bar.hide()
 	if health_bar && health_component:
-		health_bar.value = health_component.current_health / health_component.max_health * 100
-		health_component.health_changed.connect(_update_health_bar)
+		_update_health_bar()
 	elif health_bar:
 		health_bar.hide()
 
@@ -63,8 +63,10 @@ func _update_ammo_lable():
 	ammo_label.text = "x"+str(fire_component.current_weapon.current_ammo)
 
 
-func _update_health_bar(new_amount : int):
-	health_bar.value = health_component.current_health / health_component.max_health * 100
+func _update_health_bar(new_amount : int = 0):
+	health_bar.value = (float(health_component.current_health) / float(health_component.max_health)) * 100.0
+	if health_label:
+		health_label.text = str(health_component.current_health) + "/" + str(health_component.max_health)
 
 
 func _process(delta: float) -> void:

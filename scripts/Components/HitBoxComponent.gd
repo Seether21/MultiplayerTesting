@@ -3,9 +3,10 @@ class_name HitBoxComponent
 
 signal damage_taken(amount : int)
 
-
+@rpc("any_peer","call_local")
 func take_damage(amount : int):
-	damage_taken.emit(amount)
+	if is_multiplayer_authority():
+		damage_taken.emit(amount)
 
 
 func set_team(team : int):
